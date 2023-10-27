@@ -30,13 +30,13 @@ jobs:
       run: echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
 
     - name: Build Docker image
-      run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/Autenticacion:latest .
+      run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/autenticacion:latest .
 
     - name: Run test
       run: python manage.py test
 
     - name: Push Docker image to Docker Hub
-      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/Autenticacion:latest
+      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/autenticacion:latest
 
 
     

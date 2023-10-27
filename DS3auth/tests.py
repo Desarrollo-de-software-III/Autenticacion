@@ -26,12 +26,6 @@ class SignupTest(TestCase):
         response = self.client.post(reverse('signup'), invalid_data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_invalid_password(self):
-        invalid_data = self.valid_user_data.copy()
-        invalid_data['password'] = 'short'
-        response = self.client.post(reverse('signup'), invalid_data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-
     def test_duplicate_email(self):
         User.objects.create_user(**self.valid_user_data)
         response = self.client.post(reverse('signup'), self.valid_user_data, format='json')

@@ -11,11 +11,6 @@ jobs:
     
     steps:
     - uses: actions/checkout@v2
-    - uses: toko-bifrost/ms-teams-deploy-card@master #  or "./" if in a local set-up
-      if: always()
-      with:
-        github-token: ${{ github.token }}
-        webhook-uri: ${{ secrets.TEAMS_WEBHOOK }}
 
     - name: Set up Python
       uses: actions/setup-python@v2

@@ -4,6 +4,7 @@ from rest_framework import status
 from django.contrib.auth import authenticate, login
 from rest_framework.authtoken.models import Token
 
+
 @api_view(['POST'])
 def login_view(request):
     username = request.data.get('username')  # Puede ser el correo electrónico

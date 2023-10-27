@@ -1,0 +1,47 @@
+name: DSSI-26 Build, Test and Deploy to Docker Hub
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.x
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        export DJANGO_SETTINGS_MODULE=DS3auth.settings  
+        python manage.py migrate
+      env:
+        DJANGO_SETTINGS_MODULE: DS3auth.settings
+
+    - name: Login to Docker Hub
+      run: echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+
+    - name: Build Docker image
+      run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/Autenticacion:latest .
+
+    - name: Run test
+      run: python manage.py test
+
+    - name: Push Docker image to Docker Hub
+      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/Autenticacion:latest
+
+
+    
+
+
+
+
+      

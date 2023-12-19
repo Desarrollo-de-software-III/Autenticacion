@@ -21,7 +21,7 @@ def signup(request):
 
         user = User.objects.create_user(username=email, email=email, password=password)
         token, created = Token.objects.get_or_create(user=user)
-
+        user.save()
         return Response({'token': token.key, 'user': serializer.data}, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
